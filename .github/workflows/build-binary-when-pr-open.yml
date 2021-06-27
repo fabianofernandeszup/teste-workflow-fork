@@ -14,13 +14,13 @@ jobs:
           cat $GITHUB_EVENT_PATH
           echo "--------------------"
           cd $GITHUB_WORKSPACE
-          touch teste.txt
+          cp "$GITHUB_EVENT_PATH" event.json
 
       - name: Upload binary
         uses: actions/upload-artifact@v2
         with:
           name: rit-linux
-          path: "$GITHUB_EVENT_PATH"
+          path: ./event.json
 
 #      - name: Pull Request Number
 #        id: pull-request-number

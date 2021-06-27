@@ -21,7 +21,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: GITHUB_EVENT_PATH
-          path: ${{ GITHUB_EVENT_PATH }}
+          path: "${{ GITHUB_EVENT_PATH }}"
 
       - name: Pull Request Number
         id: pull-request-number

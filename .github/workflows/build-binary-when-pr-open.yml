@@ -12,7 +12,7 @@ jobs:
           echo "$GITHUB_EVENT_PATH"
           echo "--------------------"
           cat $GITHUB_EVENT_PATH
-          echo "--------------------"
+          echo "--------------------."
           cd $GITHUB_WORKSPACE
           cp "$GITHUB_EVENT_PATH" ./event.json
 

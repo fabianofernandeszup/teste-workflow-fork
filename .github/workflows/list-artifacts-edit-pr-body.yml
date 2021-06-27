@@ -17,7 +17,9 @@ jobs:
 
       - name: Pull Request Number
         id: pull-request-number
-        run: echo "::set-output name=pr-number::$(jq --raw-output .pull_request.number ./event-json/event.json)"
+        run: |
+          echo "::set-output name=pr-number::$(jq --raw-output .pull_request.number ./event-json/event.json)"
+          echo "::steps.pull-request-number.outputs.pr-number": ${{ steps.pull-request-number.outputs.pr-number }}
 
       - name: List artifacts
         id: list-artifacts
@@ -44,4 +46,4 @@ jobs:
   Directly call the binary: `./rit --version` or `./rit.exe name of formula`\r
   \r\r"
           replace-last-message: true
-          pr-number: $ {{ steps.pull-request-number.outputs.pr-number }}
+          pr-number: ${{ steps.pull-request-number.outputs.pr-number }}

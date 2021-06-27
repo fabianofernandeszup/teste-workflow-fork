@@ -8,14 +8,21 @@ jobs:
   list-artifacts-edit-pr-body:
     runs-on: ubuntu-latest
     steps:
-      - name: Pull Request Number
-        id: pull-request-number
-        run: echo "::set-output name=pull-request-number::$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")"
+      - name: Download workflow artifact
+        uses: dawidd6/action-download-artifact@v2.11.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: build-binary-when-pr-open.yml
+          run_id: ${{ github.event.workflow_run.id }}
 
-      - name: Cat GIT HUB EVENT
-        run: |
-          echo $GITHUB_EVENT_PATH
-          cat $GITHUB_EVENT_PATH
+#      - name: Pull Request Number
+#        id: pull-request-number
+#        run: echo "::set-output name=pull-request-number::$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")"
+
+#      - name: Cat GIT HUB EVENT
+#        run: |
+#          echo $GITHUB_EVENT_PATH
+#          cat $GITHUB_EVENT_PATH
 
       - name: List artifacts
         id: list-artifacts
@@ -23,22 +30,22 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Update PR Body
-        uses: chiaretto/github-action-concat-pr-body@master
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          message: "
-        ### This pull request generated the following artifacts.
-
-  To test the health and quality of this implementation, download the respective binary
-  for your operating system, unzip and directly run the binary like the examples below.
-
-  - **Linux**\r
-  Download the file: **[rit-linux.zip](${{ steps.list-artifacts.outputs.rit-linux}})**\r
-  URL: ${{ steps.list-artifacts.outputs.rit-linux}}\r
-  Unzip to some folder like: `/home/user/downloads/pr${{ steps.pull-request-number.outputs.pull-request-number }}`\r
-  Access the folder: `cd /home/user/downloads/pr${{ steps.pull-request-number.outputs.pull-request-number }}`\r
-  Assign execute permission to binary: `chmod +x ./rit`\r
-  Directly call the binary: `./rit --version` or `./rit.exe name of formula`\r
-  \r\r"
-          replace-last-message: true
+#      - name: Update PR Body
+#        uses: chiaretto/github-action-concat-pr-body@master
+#        with:
+#          github-token: "${{ secrets.GITHUB_TOKEN }}"
+#          message: "
+#        ### This pull request generated the following artifacts.
+#
+#  To test the health and quality of this implementation, download the respective binary
+#  for your operating system, unzip and directly run the binary like the examples below.
+#
+#  - **Linux**\r
+#  Download the file: **[rit-linux.zip](${{ steps.list-artifacts.outputs.rit-linux}})**\r
+#  URL: ${{ steps.list-artifacts.outputs.rit-linux}}\r
+#  Unzip to some folder like: `/home/user/downloads/pr${{ steps.pull-request-number.outputs.pull-request-number }}`\r
+#  Access the folder: `cd /home/user/downloads/pr${{ steps.pull-request-number.outputs.pull-request-number }}`\r
+#  Assign execute permission to binary: `chmod +x ./rit`\r
+#  Directly call the binary: `./rit --version` or `./rit.exe name of formula`\r
+#  \r\r"
+#          replace-last-message: true

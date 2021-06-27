@@ -21,29 +21,16 @@ jobs:
           echo "::set-output name=pr-number::$(jq --raw-output .pull_request.number ./event-json/event.json)"
           echo "::steps.pull-request-number.outputs.pr-number": ${{ steps.pull-request-number.outputs.pr-number }}
 
-      - name: List artifacts
-        id: list-artifacts
-        uses: chiaretto/github-action-list-artifacts-pr@master
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+#      - name: List artifacts
+#        id: list-artifacts
+#        uses: chiaretto/github-action-list-artifacts-pr@master
+#        with:
+#          github-token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Update PR Body
         uses: chiaretto/github-action-concat-pr-body@master
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-          message: "
-        ### This pull request generated the following artifacts.
-
-  To test the health and quality of this implementation, download the respective binary
-  for your operating system, unzip and directly run the binary like the examples below.
-
-  - **Linux**\r
-  Download the file: **[rit-linux.zip](${{ steps.list-artifacts.outputs.rit-linux}})**\r
-  URL: ${{ steps.list-artifacts.outputs.rit-linux}}\r
-  Unzip to some folder like: `/home/user/downloads/pr${{ steps.pull-request-number.outputs.pull-request-number }}`\r
-  Access the folder: `cd /home/user/downloads/pr${{ steps.pull-request-number.outputs.pull-request-number }}`\r
-  Assign execute permission to binary: `chmod +x ./rit`\r
-  Directly call the binary: `./rit --version` or `./rit.exe name of formula`\r
-  \r\r"
+          message: "### This pull request generated the following artifacts."
           replace-last-message: true
           pr-number: ${{ steps.pull-request-number.outputs.pr-number }}

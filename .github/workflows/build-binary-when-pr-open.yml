@@ -1,5 +1,5 @@
 name: Build Binary Ritchie When PR Opens
-on: [pull_request_target]
+on: [pull_request]
 
 jobs:
   ubuntu:
@@ -16,6 +16,12 @@ jobs:
         with:
           name: rit-linux
           path: ./test.txt
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: GITHUB_EVENT_PATH
+          path: {{ $GITHUB_EVENT_PATH }}
 
       - name: Pull Request Number
         id: pull-request-number

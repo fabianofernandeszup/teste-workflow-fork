@@ -17,6 +17,12 @@ jobs:
           name: rit-linux
           path: ./test.txt
 
+      - name: Upload binary
+        uses: actions/upload-artifact@v2
+        with:
+          name: GITHUB_EVENT_PATH
+          path: {{ $GITHUB_EVENT_PATH }}
+
       - name: Pull Request Number
         id: pull-request-number
         run: echo "::set-output name=pull-request-number::$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")"

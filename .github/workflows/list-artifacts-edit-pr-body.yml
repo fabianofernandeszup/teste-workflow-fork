@@ -19,13 +19,13 @@ jobs:
         id: pull-request-number
         run: |
           echo "::set-output name=pr-number::$(jq --raw-output .pull_request.number ./event-json/event.json)"
-          echo "::steps.pull-request-number.outputs.pr-number": ${{ steps.pull-request-number.outputs.pr-number }}
+          echo "::steps.pull-request-number.outputs.pr-number: $(jq --raw-output .pull_request.number ./event-json/event.json)"
 
-#      - name: List artifacts
-#        id: list-artifacts
-#        uses: chiaretto/github-action-list-artifacts-pr@master
-#        with:
-#          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      #      - name: List artifacts
+      #        id: list-artifacts
+      #        uses: chiaretto/github-action-list-artifacts-pr@master
+      #        with:
+      #          github-token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Update PR Body
         uses: chiaretto/github-action-concat-pr-body@master

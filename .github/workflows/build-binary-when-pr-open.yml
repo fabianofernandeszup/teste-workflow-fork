@@ -11,6 +11,8 @@ jobs:
           echo GITHUB_EVENT_PATH
           echo "$GITHUB_EVENT_PATH"
           echo "--------------------"
+          cat $GITHUB_EVENT_PATH
+          echo "--------------------"
           cd $GITHUB_WORKSPACE
           touch teste.txt
 
